@@ -1,60 +1,61 @@
 import React, { useState, useEffect, useRef } from 'react';
-import "./ValueSlider.css";
-import Slider from '@material-ui/core/Slider';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Slider from '@mui/material/Slider';
+import { styled } from '@mui/material/styles';
 import * as d3 from 'd3';
-import { blueGrey } from '@material-ui/core/colors';
+import { blueGrey } from '@mui/material/colors';
 
-const useStyles = makeStyles(theme => ({
-  icon: {
-    height: 35,
-    width: 35,
-    margin: theme.spacing(0),
-    color: "skyblue",
-  },
-  button: {
-      height:40,
-      width:40,
-      margin: theme.spacing(0),
-      padding: 0,
-      minWidth: 40
-  }
-}));
+// Styles are now handled inline or with styled components
+// const useStyles = makeStyles(theme => ({
+//   icon: {
+//     height: 35,
+//     width: 35,
+//     margin: theme.spacing(0),
+//     color: "skyblue",
+//   },
+//   button: {
+//       height:40,
+//       width:40,
+//       margin: theme.spacing(0),
+//       padding: 0,
+//       minWidth: 40
+//   }
+// }));
 
-const PrettoSlider = withStyles({
-    root: {
-      color: "#78909c",
-      width: 100,
-      height: 100
-    },
-    thumb: {
+// Temporarily using default Slider - styled component needs MUI v5 syntax update
+const PrettoSlider = Slider;
+/* 
+const PrettoSlider = styled(Slider)({
+    color: "#78909c",
+    width: 100,
+    height: 100,
+    '& .MuiSlider-thumb': {
       height: 20,
       width: 20,
       backgroundColor: "#fff",
       border: "2px solid currentColor",
       marginTop: -8,
       marginLeft: -12,
-      "&:focus,&:hover,&$active": {
+      "&:focus, &:hover": {
         boxShadow: "inherit"
       }
     },
-    active: {},
-    valueLabel: {
+    '& .MuiSlider-valueLabel': {
       left: "calc(-50%)"
     },
-    track: {
+    '& .MuiSlider-track': {
       height: 20,
       borderRadius: 7
     },
-    rail: {
+    '& .MuiSlider-rail': {
       height: 20,
       borderRadius: 5
     },
-    mark: {
+    '& .MuiSlider-mark': {
       height: 1,
       width: 8,
     }
-  })(Slider);
+});
+*/
 
 
 const ValueSlider = props => {

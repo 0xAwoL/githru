@@ -387,7 +387,7 @@ const BranchSummary = (props) => {
             </div>
             
             <div id={"branchSummary" + branchNo}
-                className="branchSummaryArea"
+                className="branchSummaryArea flexContainer"
                 style={{
                     position: "absolute",
                     "width": maxWidth + summaryWidth + "px",
@@ -395,7 +395,6 @@ const BranchSummary = (props) => {
                     "left": summaryStartX + "px",
                     "top": (clusterNodes[0].height + underlineHeight + arrowHeight) + "px",
                 }}
-                className="flexContainer"
             >
                 {clusterNodes.map( (clusterNode, i) => {
                     let overWidth = (i > 0 ? rectWidths.slice(0, i).reduce( (prev, cur) => prev + cur, 0) : 0);

@@ -7,7 +7,6 @@ import CommitGraph from './components/CommitGraph';
 // import ClusterSummary from './components/ClusterSummary';
 import { AttributeColors, BranchColors, changeRGBColorByOpacity } from './components/ColorClasses';
 
-import './App.css';
 import KeywordTextAreaFilter from './components/KeywordTextAreaFilter';
 import PreferenceSliders from './components/PreferenceSliders';
 import ManageParameters from './components/ManageParameters';
@@ -17,12 +16,12 @@ import CaptureTab from './components/CaptureTab';
 import CompareSummary from './components/CompareSummary';
 import HighlightQuery from './components/HighlightQuery';
 import { SidePanelContentUnit } from './components/container/SidePanelContentUnit';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+import Button from '@mui/material/Button';
+import Icon from '@mui/material/Icon';
 import { AttributeIconSpecs } from './components/LegendIcons';
 import { DataTypeByNameMap } from './components/analyzer/GithruClasses';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import * as actions from './modules';
 
 

@@ -423,6 +423,19 @@ export function drawClusters(
         
         let branchNames = GitAnalyzer.getBranchNamesFromBranchClusterNodes(branchClusterNodes);
 
+        // Add branch name text labels
+        if (branchNames.length > 0) {
+            elem.append("text")
+                .attr("class", "branchNameLabel")
+                .attr("x", xRectScale(branchClusterNodes[0].blockList[0].x) + 5)
+                .attr("y", yBandScale(branchClusterNodes[0].y) + yBandScale.bandwidth() + summaryLineHeight - 2)
+                .style("font-size", "10px")
+                .style("font-weight", "bold")
+                .style("fill", "black")
+                .style("pointer-events", "none")
+                .text(branchNames.slice(0, 2).join(", ")); // Show first 2 branch names
+        }
+
         elem.append("rect")
             .attr("class", "branchUnderlines")
             .attr("id", "underlines" + branchNo)
@@ -447,7 +460,7 @@ export function drawClusters(
                 d3.select(this).style("fill-opacity", 1);
                 d3.select(".blocksBox").style("fill-opacity", defaultClusterOpacity);
             })
-            .on("mouseover", function (d) {
+            .on("mouseover", function (event, d) {
                 // d3.select(this)
                 //     .attr("y", yBandScale(branchNodes[0].y))
                 //     .attr("height", yBandScale.bandwidth() + summaryLineHeight);
@@ -459,8 +472,8 @@ export function drawClusters(
                     .html(branchNames.join("<br />"))
                     .style("visibility", "visible")
                     .style("opacity", 0.8)
-                    .style("left", (d3.event.pageX + 4) + "px")
-                    .style("top", (d3.event.pageY - 2) + "px");
+                    .style("left", (event.pageX + 4) + "px")
+                    .style("top", (event.pageY - 2) + "px");
             })
             .on("mouseleave", function (d) {
                 // d3.select(this)

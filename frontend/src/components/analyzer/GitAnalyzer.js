@@ -38,6 +38,8 @@ export class GitAnalyzer {
 console.log("URL Params:", this.repoName, this.mainStemBranchName);
         this.mergeSquashCommitNumber = -1;
 
+        console.log('GitAnalyzer initialized with headId:', this.headId);
+        console.log('Total nodes:', this.allNodeList.length);
         this.buildContextAbstractionGraph();
     }
 
@@ -241,12 +243,18 @@ if (rootNode.id.startsWith("461cc1")) console.log("rootNode", rootNode)
         ).reverse();
 
         // branchedNodes.reverse();
-        let branchedNodes = [this.getNodeById(this.headId)].concat(branchedNodesNotHead);
+        let headNode = this.getNodeById(this.headId);
+        let branchedNodes = headNode ? [headNode].concat(branchedNodesNotHead) : branchedNodesNotHead;
         
         let FPTreeNodeListMapByNodeId = {};
 // console.log("branchedNodes", branchedNodes)
 
         branchedNodes.forEach( branchedNode => {
+            // Skip if branchedNode is undefined
+            if (!branchedNode || !branchedNode.id) {
+                console.warn('Skipping undefined branchedNode:', branchedNode);
+                return;
+            }
             // newBranchNoByNodeId[branchedNode.id] = newBranchNo++;
 // if (branchedNode.id.startsWith("b35dabf")) console.log("branchedNode", branchedNode);
             let id = branchedNode.id;

@@ -1,15 +1,14 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 import GitAnalyzer from './analyzer/GitAnalyzer';
-import { Table, TableRow, TableCell, TableBody, Button } from '@material-ui/core';
+import { Table, TableRow, TableCell, TableBody, Button } from '@mui/material';
 import * as d3 from 'd3';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../modules';
 import { AttributeColors } from './ColorClasses';
-import './InformationFragments.css';
 import { DataTypeByNameMap } from './analyzer/GithruClasses';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
     table: {
         padding: 1,
     },
@@ -44,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const InformationFragments = (props) => {
-    const classes = useStyles();
+    // const classes = useStyles(); // Temporarily disabled to fix Symbol error
     const { width } = props;
     const buttonWidth = 15;
 
@@ -104,10 +103,9 @@ const InformationFragments = (props) => {
                                 size="small" 
                                 variant="outlined"
                                 // className="control-button" 
-                                size="small" variant="outlined" 
                                 onClick={() => addInterestsItems(favoriteFragments)}>
                                     INSPECT ALL PINS
-                            </Button>
+                        </Button>
                         </div>
                     </> : ""}
                     {/* <div className="flexContainer" style={{ justifyContent: "space-between", marginBottom: "12px" }}>
@@ -166,7 +164,7 @@ const InformationFragments = (props) => {
                             size="small" 
                             variant="outlined"
                             // className="control-button" 
-                            size="small" variant="outlined" onClick={clearFragment}>
+                            onClick={clearFragment}>
                             CLEAR FRAGMENTS
                         </Button>
                     </div>

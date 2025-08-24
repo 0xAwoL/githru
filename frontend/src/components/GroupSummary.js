@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, Fragment, } from 'react';
-import { Table, TableRow, TableCell, TableBody, Hidden } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Table, TableRow, TableCell, TableBody, Hidden } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import * as d3 from 'd3';
 import { getScoreColor, AttributeColors, BranchColors } from './ColorClasses';
 import { PreferenceList, ClusterData, DataTypeByNameMap, BranchTypes } from './analyzer/GithruClasses';
 import GitAnalyzer from './analyzer/GitAnalyzer';
 import FileIcicleSummary from './FileIcicleSummary';
-import WordCloud from 'wordcloud';
+// WordCloud removed - using simple text display instead
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
   table: {
     padding: 1,
   },
@@ -195,8 +195,8 @@ const BarChartSummary = (props) => {
       .style("font-weight", "400")
       .style("cursor", "pointer")
       .text(d => GitAnalyzer.getTextValue(d[2], d[0]))
-      .on("mouseover", () => hover(d3.event))
-      .on("mouseout", () => hout(d3.event))
+      .on("mouseover", (event) => hover(event))
+      .on("mouseout", (event) => hout(event))
       .on("click", d => props.registerFavoriteFragment([d[2], d[0]]));
     ;
 
@@ -236,8 +236,8 @@ const BarChartSummary = (props) => {
       .style("font-weight", "400")
       .style("cursor", "pointer")
       .text(d => GitAnalyzer.getTextValue(d[2], d[0]))
-      .on("mouseover", () => hover(d3.event))
-      .on("mouseout", () => hout(d3.event))
+      .on("mouseover", (event) => hover(event))
+      .on("mouseout", (event) => hout(event))
       .on("click", d => props.registerFavoriteFragment([d[2], d[0]]));
     ;
 
@@ -270,34 +270,16 @@ const BarChartSummary = (props) => {
 
     console.log(AttributeColors.keyword[2])
 
-    WordCloud(document.getElementById("keywordsDetailedList"), {
-      list: keywordList,
-      wait: 0,
-      rotateRatio: 0,
-      weightFactor: 3,
-      color: AttributeColors.keyword[1],
-      classes: function(word) {
-          return "wordCloud wordCloud_" + processKey(word); 
-      },
-      hover: function(item, dimension, event) {
-          if(item !== undefined) {
-              d3.selectAll(".wordCloud")
-                .style("font-weight", "300")
-                .style("opacity", 0.5);
-              d3.selectAll(".wordCloud_" + processKey(item[0]))
-                .style("font-weight", "900")
-                .style("opacity", 1);
-          }
-      }
-
+    // WordCloud functionality removed - display keywords as simple list
+    console.log('Keywords for cluster:', keywordList);
     
-  });
-  d3.select("#keywordsDetailedList")
-        .on("mouseleave", function(d) {
-            d3.selectAll(".wordCloud")
-            .style("font-weight", 300)
-            .style("opacity", 1);
-        })
+    // Create simple text display instead of word cloud
+    const keywordsContainer = document.getElementById("keywordsDetailedList");
+    if (keywordsContainer) {
+        keywordsContainer.innerHTML = keywordList
+            .map(([word, count]) => `<span style="margin: 2px; padding: 2px 4px; background: ${AttributeColors.keyword[1]}; border-radius: 3px; font-size: ${Math.min(16, 8 + count)}px;">${word}</span>`)
+            .join(' ');
+    }
         
   
 
@@ -348,7 +330,7 @@ const MessagePrint = (props) => {
 }
 
 const NodeDetail = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles(); // Temporarily disabled to fix Symbol error
   const { node, parentNode, registerFavoriteFragment, gitAnalyzer } = props;
   // console.log("NodeDetail", props);
   const isParent = (parentNode === undefined && node.mergeNodes.length > 0);
@@ -356,6 +338,7 @@ const NodeDetail = (props) => {
   const className = (isChild ? "commitChildRow" + parentNode.seq : "commitRow" + node.seq);
 
   const toggleRowShow = () => {
+
     let childClass = "." + "commitChildRow" + node.seq;
     // console.log("togrowshow", d3.select(childClass).style("visibility"));
     let visible = d3.select(childClass).style("visibility") === "visible";
@@ -485,7 +468,7 @@ const NodeDetail = (props) => {
 }
 
 const NodeDetailList = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles(); // Temporarily disabled to fix Symbol error
   const { nodeList, gitAnalyzer, } = props;
 
   return (
@@ -524,7 +507,7 @@ const NodeDetailList = (props) => {
 // DEFAULT HOOK
 ///////////////////////////////////////
 const GroupSummary = props => {
-  const classes = useStyles();
+  // const classes = useStyles(); // Temporarily disabled to fix Symbol error
   const { selectedClusterNode, width, gitAnalyzer, arrowStartX, arrowWidth, registerFavoriteFragment } = props;
   //const clusterData = new ClusterData(selectedClusterNode.cluster, gitAnalyzer.corpusData);
   const clusterData = selectedClusterNode.clusterData;

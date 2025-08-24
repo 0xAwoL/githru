@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import * as actions from '../modules';
 
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 import Form from 'react-bootstrap/Form';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
     container: {
         display: 'flex',    
         flexDirection: 'column',
@@ -21,14 +21,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const HighlightQuery = (props) => {
-    const classes = useStyles();
+    // const classes = useStyles(); // Temporarily disabled to fix Symbol error
     const [ query, setQuery ] = useState("");
     const dispatch = useDispatch();
 
     return (
-        <form className={classes.container} noValidate autoComplete="on">
+        <form noValidate autoComplete="on">
             <Form.Control
-                    className={classes.textArea}
                     rows={2}
                     as="textarea" 
                     placeholder="KEYWORD FOR HIGHLIGHT (including tag, branch: ex. pr/123)"
