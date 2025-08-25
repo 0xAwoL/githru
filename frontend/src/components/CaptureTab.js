@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { styled } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import * as d3 from 'd3';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 import * as actions from '../modules';
 import GitAnalyzer from './analyzer/GitAnalyzer';
-import { Table, TableRow, TableCell, TableBody, Checkbox, Button } from '@material-ui/core';
+import { Table, TableRow, TableCell, TableBody, Checkbox, Button } from '@mui/material';
 import { SidePanelContentUnit } from './container/SidePanelContentUnit';
-import './CaptureTab.css';
+
 import { changeRGBColorByOpacity } from './ColorClasses';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
     root: {
         margin: "0px",
         padding: "2px",
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CaptureTab = (props) => {
-    const classes = useStyles();
+    // const classes = useStyles(); // Temporarily disabled to fix Symbol error
     const { capturedSummaryInfoList, scrollToRight } = useSelector(state => state);
     const [ checkedDic, setCheckedDic ] = useState({});
     const dispatch = useDispatch();

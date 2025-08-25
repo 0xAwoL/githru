@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import "./UserInterests.css";
 import GitAnalyzer from "./analyzer/GitAnalyzer";
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {DataTypeByNameMap} from "./analyzer/GithruClasses";
 import * as d3 from 'd3';
-import CheckIcon from '@material-ui/icons/Check';
+import CheckIcon from '@mui/icons-material/Check';
 import { changeRGBColorByOpacity } from './ColorClasses';
 
 function ShowCheckBox(props) {

@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import FileStructureAnalyzer from './analyzer/FileStructureAnalyzer'
 import { useSelector } from 'react-redux';
 import { AttributeColors } from "./ColorClasses"
-import Select from '@material-ui/core/Select'
+import Select from '@mui/material/Select'
 
 const FileIcicleSummary = props => {
 

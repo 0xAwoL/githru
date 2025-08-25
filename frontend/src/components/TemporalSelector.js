@@ -1,4 +1,3 @@
-import "./TemporalSelector.css";
 import * as d3 from 'd3';
 import { AttributeColors } from "./ColorClasses"
 import GitAnalyzer from './analyzer/GitAnalyzer';
@@ -97,7 +96,7 @@ function navRender(props, state) {
 
     const getCommitBrushSelectionsTriggeredByTemporalBrush = (selection, commitSeqXScale, bins, globalStartSeq) => {
         if (selection === null) return null;
-// console.log("getCommitBrushSelectionsTriggeredByTemporalBrush", d3.event.target);
+// console.log("getCommitBrushSelectionsTriggeredByTemporalBrush");
         let newXScale = d3.scaleLinear().rangeRound([0, bins.length - 1]).domain(commitSeqXScale.range());
         let startBinIndex, endBinIndex;
         [startBinIndex, endBinIndex] = selection.map(d => newXScale(d));
@@ -120,7 +119,7 @@ function navRender(props, state) {
     }
 
     const commitBrushFunc = (selection, commitSeqXScale) => {
-        console.log("brushed width x", d3.event, selection);
+        console.log("brushed width x", selection);
         if (selection === null) return null;
 
         let commitSeqScale = d3.scaleLinear().range([0, globalFilteredNodeList.length - 1]).domain(commitSeqXScale.range());
@@ -328,12 +327,12 @@ function navRender(props, state) {
         .style("stroke-width", 1)
         .style("stroke", d => (d.isMajorRelease ? "black" : "#BBBBBB"))
         .style("opacity", 0.3)
-        .on("mouseenter", function (d) {
+        .on("mouseenter", function (event, d) {
             d3.select(this).style("stroke", "red").style("stroke-width", "3px");
             d3.select("#releaseLabelDiv")
                 .text(d.releaseTagString)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 10) + "px")
+                .style("left", (event.pageX) + "px")
+                .style("top", (event.pageY - 10) + "px")
                 .style("opacity", 1)
                 ;
             d3.select("#commitRect" + d.seq).attr("height", focusHeight + 10).attr("y", -5);
@@ -378,27 +377,27 @@ function navRender(props, state) {
         .call(temporalBrush.move, commitSeqXScale.range())
         ;
 
-    temporalBrush.on("brush", () => {
+    temporalBrush.on("brush", (event) => {
         drawTemporalToCommitArrow();
-        handleTemporalLabel(d3.event.selection, xTemporalScale);
+        handleTemporalLabel(event.selection, xTemporalScale);
     });
-    commitBrush.on("brush", () => {
-        drawCommitToClusterArrow(d3.event.selection);
+    commitBrush.on("brush", (event) => {
+        drawCommitToClusterArrow(event.selection);
         drawTemporalToCommitArrow();
-// console.log("commitBrush", d3.event.selection, commitSeqXScale)
-        handleCommitLabel(d3.event.selection, commitSeqXScale, globalStartSeq);
+// console.log("commitBrush", event.selection, commitSeqXScale)
+        handleCommitLabel(event.selection, commitSeqXScale, globalStartSeq);
     });
 
-    temporalBrush.on("end", () => {
-        if (d3.event.selection === null) return;
-        let newSelection = getCommitBrushSelectionsTriggeredByTemporalBrush(d3.event.selection, commitSeqXScale, bins, globalStartSeq);
+    temporalBrush.on("end", (event) => {
+        if (event.selection === null) return;
+        let newSelection = getCommitBrushSelectionsTriggeredByTemporalBrush(event.selection, commitSeqXScale, bins, globalStartSeq);
 
         d3.select("#commitBrush").call(commitBrush.move, newSelection);
         drawTemporalToCommitArrow();
     });
-    commitBrush.on("end", () => {
-        if (d3.event.selection === null) return;
-        let brushedSeqs = commitBrushFunc(d3.event.selection, commitSeqXScale);
+    commitBrush.on("end", (event) => {
+        if (event.selection === null) return;
+        let brushedSeqs = commitBrushFunc(event.selection, commitSeqXScale);
         let newSelection = brushedSeqs.map(d => xTemporalScale(parseTime(globalFilteredNodeList[d].commit.date)));
 
         let brushG = d3.select("#temporalBrush");
@@ -463,7 +462,7 @@ const TemporalSelector = props => {
     const dispatch = useDispatch();
     const udpateCommitsByTemporalBrush = (sel) => dispatch(actions.udpateCommitsByTemporalBrush(sel));
     state.udpateCommitsByTemporalBrush = udpateCommitsByTemporalBrush;
-    const commitSeqSelectionByTemporalFilter = useSelector(state => state.commitSeqSelectionByTemporalFilter);
+    // const commitSeqSelectionByTemporalFilter = useSelector(state => state.commitSeqSelectionByTemporalFilter);
 
     let isInitRef = useRef(true);
     
@@ -476,14 +475,14 @@ const TemporalSelector = props => {
         udpateCommitsByTemporalBrush(state.globalCommitSeqSelectionByTemporalFilter);
     }, [state.globalCommitSeqSelectionByTemporalFilter]);
 
-    useEffect( () => {
-        if (isInitRef.current) {
-            isInitRef.current = false;
-        } else {
-console.log("changed commitseqselection executed", state, state.commitBrush, commitBrush, commitSeqXScale);
-            d3.select("#commitBrush").call(commitBrush.move, commitSeqSelectionByTemporalFilter.map(d => commitSeqXScale(d) + commitSeqXScale.bandwidth()/2));
-        }
-    }, [commitSeqSelectionByTemporalFilter]);
+//     useEffect( () => {
+//         if (isInitRef.current) {
+//             isInitRef.current = false;
+//         } else {
+// console.log("changed commitseqselection executed", state, state.commitBrush, commitBrush, commitSeqXScale);
+//             d3.select("#commitBrush").call(commitBrush.move, commitSeqSelectionByTemporalFilter.map(d => commitSeqXScale(d) + commitSeqXScale.bandwidth()/2));
+//         }
+//     }, [commitSeqSelectionByTemporalFilter]);
 
     return (
         <div>

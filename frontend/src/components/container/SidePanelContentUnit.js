@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import './SidePanelContentUnit.css';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 export const SidePanelContentUnit = (props) => {
     const [show, setShow] = useState( (props.show !== undefined ? props.show : true) );

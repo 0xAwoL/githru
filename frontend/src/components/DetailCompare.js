@@ -4,14 +4,13 @@ import { CommitCluster } from './analyzer/GithruClasses';
 import * as d3 from 'd3';
 import GitAnalyzer from './analyzer/GitAnalyzer';
 import { intersection } from "lodash";
-import { Checkbox } from '@material-ui/core';
-import "./DetailCompare.css";
+import { Checkbox } from '@mui/material';
 import * as actions from '../modules';
-import { KeywordCloud } from './library/wordCloudGenerator';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+// KeywordCloud removed - using simple text display instead
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 
 
 const DetailCompare = (props) => {
@@ -688,7 +687,7 @@ const DetailCompare = (props) => {
                 .attr("width", d => xAxisScale.current(d.loc))
                 .attr("height", rectHeight)
                 .attr("class", d => type + "_" + processKey(d[type]))
-                .on("mouseover", function (d) {
+                .on("mouseover", function (event, d) {
                     if (d.inIntersection ? interChecked.current : checked.current) {
                         d3.selectAll("." + type + "_" + processKey(d[type])).attr("width", xAxisLength).raise()
                         d3.selectAll("." + type + "_rect_" + processKey(d[type])).style("opacity", 1);
@@ -696,8 +695,8 @@ const DetailCompare = (props) => {
                         d3.selectAll("." + type + "_text_" + processKey(d[type])).style("opacity", 1).style("font-weight", "bold");
                     
                         d3.select(".tooltipHover")
-                          .style("left", (d3.event.pageX) + "px")		
-                          .style("top", (d3.event.pageY) + "px")
+                          .style("left", (event.pageX) + "px")		
+                          .style("top", (event.pageY) + "px")
                           .style("opacity", 0.8)
                           .style("width", "140px")
                           .html(isLoc.current ? d.loc.toFixed(0) + " lines modified" : d.commitNum.toFixed(1) + " commits")
@@ -718,10 +717,10 @@ const DetailCompare = (props) => {
                     }
                     d3.select(".tooltipHover").style("opacity", 0);
                 })
-                .on("mousemove", function (d) {
+                .on("mousemove", function (event, d) {
                     d3.select(".tooltipHover")
-                      .style("left", (d3.event.pageX) + "px")		
-                      .style("top", (d3.event.pageY) + "px");
+                      .style("left", (event.pageX) + "px")		
+                      .style("top", (event.pageY) + "px");
                 });
 
             rects.current = svgMolds.current.append("rect")
@@ -975,7 +974,8 @@ const DetailCompare = (props) => {
             .domain([0, 1])
             .range([0, keywordsWidth / 2 - 25]);
      
-        KeywordCloud.generate(aList, bList, interList, "keywordsCanvas_1", "keywordsCanvas_2", 3, 0.5, 3, 10);
+        // KeywordCloud.generate(aList, bList, interList, "keywordsCanvas_1", "keywordsCanvas_2", 3, 0.5, 3, 10);
+        console.log('WordCloud functionality removed - keywords:', { aList, bList, interList });
         
         let graphMargin = 5;
         let rectMargin = 5;

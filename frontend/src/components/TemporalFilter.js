@@ -5,18 +5,17 @@ import * as actions from '../modules';
 
 import GitAnalyzer from './analyzer/GitAnalyzer';
 
-import "./TemporalFilter.css";
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-import Select from '@material-ui/core/Select';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import Select from '@mui/material/Select';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
     formControl: {
         margin: 0,
     },
@@ -90,7 +89,7 @@ const SearchDiv = (props) => {
 }
 
 const TemporalFilter = props => {
-    const classes = useStyles();
+    // const classes = useStyles(); // Temporarily disabled to fix Symbol error
     const [fromType, setFromType] = React.useState("tag");
     const [toType, setToType] = React.useState("tag");
     const [startDate, setStartDate] = React.useState("date");
@@ -162,13 +161,13 @@ const TemporalFilter = props => {
 // console.log("what the hell?")
     return (
             <div className="flexVerticalContainer">
-                <FormControl component="fieldset" className={classes.formControl}>
+                <FormControl component="fieldset">
                     <div className="flexContainer" style={{alignItems: "center"}}>
                         <SearchDiv
                             name="from"
                             value={fromType}
                             onChange={handleFromTypeChange}
-                            dateField={classes.dateField}
+                            dateField=""
                             date={startDate}
                             handleDateChange={handleStartDateChange}
                             release={startRelease}
@@ -184,7 +183,7 @@ const TemporalFilter = props => {
                             name="to"
                             value={toType}
                             onChange={handleToTypeChange}
-                            dateField={classes.dateField}
+                            dateField=""
                             date={endDate}
                             handleDateChange={handleEndDateChange}
                             release={endRelease}
